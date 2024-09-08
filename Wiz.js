@@ -58,7 +58,9 @@ export function Shutdown(SystemSuspending) {
         sendColors(shutdownColor);
     }
 
-	wiz.close()
+	if (wiz) {
+		wiz.close()
+	}
 }
 
 function sendColors(overrideColor) {
@@ -71,7 +73,7 @@ function sendColors(overrideColor) {
 	}
 	
 	if (color && wiz) {
-		wiz.setColor(overrideColor)
+		wiz.setColor(color)
 	}
 }
 
@@ -89,27 +91,56 @@ export function DiscoveryService() {
 	this.firstRun = true;
 
 	this.connect = function (devices) {
-		service.log(`Found ${devices.length} devices`)
+		service.log(`Found ${devices.length} Wiz devices`)
 		for (let i = 0; i < devices.length; i++) {
-			this.AddDevice(devices[i]);
+			this.AddDevice(devices[i].ip);
 		}
 	};
 
 	this.Initialize = function(){
-		service.log("Searching for Govee network devices...");
 		this.LoadCachedDevices();
 	};
 
 	this.LoadCachedDevices = function(){
-		service.log("Loading Cached Devices...");
+		service.log("Loading Wiz Cached Devices...");
 
 		for(const [key, value] of this.cache.Entries()){
-			service.log(`Found Cached Device: [${key}: ${JSON.stringify(value)}]`);
+			service.log(`Found Wiz Cached Device: [${key}: ${JSON.stringify(value)}]`);
 			service.addController(new WizController(value.ip, discovery))
 		}
 	};
 
+	this.CheckForDevices = function() {
+		service.log("Searching for Wiz devices on the network...")
+		discover().then((bulbs) => {
+			if (!bulbs) return;
+			service.log(`Found ${bulbs.length} Wiz devices`)
+			bulbs.forEach((bulb) => {
+				this.CreateControllerDevice(bulb.address)
+			})
+		}).catch((error) => service.log(`Something wrong happened while searching for Wiz devices. Error: ${error.message}`))
+	}
+
 	this.forceDiscovery = function(value) {
+		const packetType = JSON.parse(value.response).msg.cmd;
+		service.log(`Type: ${packetType}`);
+
+		if(packetType === "scan"){
+			service.log(`New host discovered!`);
+			service.log(value);
+			this.CreateControllerDevice(value);
+		}
+	};
+
+	this.Update = function(){
+		for(const cont of service.controllers){
+			cont.obj.update();
+		}
+
+		this.CheckForDevices();
+	};
+
+	this.Discovered = function(value) {
 		const packetType = JSON.parse(value.response).msg.cmd;
 		service.log(`Type: ${packetType}`);
 
@@ -151,7 +182,7 @@ class WizController {
 			}
 		)
 
-		bulb.onMessage((msg) => {
+		this.bulb.onMessage((msg) => {
 			discovery.forceDiscovery(msg);
 		});
 	}
