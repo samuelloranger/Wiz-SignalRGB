@@ -43,10 +43,9 @@ export function LedPositions() {
 }
 
 export function Initialize() {
+	service.log("Loading Cached Devices...");
 	device.setName(controller.sku);
 	device.setImageFromUrl(controller.deviceImage);
-
-	wiz = new WizController(controller.ip, );
 }
 
 export function Render() {
@@ -91,6 +90,13 @@ export function DiscoveryService() {
 	this.IconUrl = "https://www.wizconnected.com/content/dam/wiz/master/logo-wiz-black-navigation.svg";
 	this.firstRun = true;
 
+	this.connect = function (devices) {
+		service.log(`Found ${devices.length} devices`)
+		for (let i = 0; i < devices.length; i++) {
+			this.AddDevice(devices[i]);
+		}
+	};
+
 	this.Initialize = function(){
 		service.log("Searching for Govee network devices...");
 		this.LoadCachedDevices();
@@ -116,11 +122,16 @@ export function DiscoveryService() {
 		}
 	};
 
+	this.AddDevice = function (deviceIp) {
+		service.log(`Adding device with ip: ${deviceIp}`)
+		service.addController(new WizController(deviceIp, discovery));
+	};
+
 	this.CreateControllerDevice = function(value){
 		const controller = service.getController(value.id);
 
 		if (controller === undefined) {
-			service.addController(new WizController(value.ip, discovery));
+			this.AddDevice(value.ip)
 		} else {
 			controller.updateWithValue(value, );
 		}
