@@ -1,0 +1,8 @@
+{
+  "name": "Wiz-SignalRGB",
+  "version": "1.0.0",
+  "main": "Wiz.js",
+  "repository": "git@github.com:samuelloranger/Wiz-SignalRGB.git",
+  "author": "Samuel Loranger <samuelloranger@gmail.com>",
+  "license": "MIT"
+}
