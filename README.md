@@ -1,4 +1,4 @@
-# Govee
+# WizConnected
 
 [![Add To Installation](https://marketplace.signalrgb.com/resources/add-extension-256.png 'Add to My SignalRGB Installation')](signalrgb://addon/install?url=github.com/samuelloranger/Wiz-SignalRGB)
 
