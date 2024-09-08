@@ -4,5 +4,9 @@
   "main": "Wiz.js",
   "repository": "git@github.com:samuelloranger/Wiz-SignalRGB.git",
   "author": "Samuel Loranger <samuelloranger@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "wikari": "^0.2.1",
+    "wiz-light": "^1.0.3"
+  }
 }
