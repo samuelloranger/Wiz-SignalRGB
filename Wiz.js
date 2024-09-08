@@ -4,6 +4,7 @@
 export function Name() { return "WizConnected"; }
 export function Publisher() { return "samuelloranger@gmail.com"; }
 export function ProductId() { return 33543564 }
+export function VendorId() { return 33543564 }
 export function Size() { return [30, 10]; }
 export function DefaultPosition(){return [240, 120];}
 export function DefaultScale(){return 8.0;}
