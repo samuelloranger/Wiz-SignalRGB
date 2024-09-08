@@ -6,8 +6,3 @@ wikari@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/wikari/-/wikari-0.2.1.tgz#622c42af142e330fa038cce4a73616384f1698b7"
   integrity sha512-2un6KQRdgro76S5hHkeLEZc7MbHuQZy3OODC/qTnsNPmcGikhnKtlxhDtgNSB9P0epyDbDDNm5AAfK7t3mzddA==
-
-wiz-light@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/wiz-light/-/wiz-light-1.0.3.tgz#2127956576b47f3a9c6fa900798ba8c54fee7658"
-  integrity sha512-wW+3jt8/L+m5GuGroFVs3fWSV/oOWiNp0alkw6FBvgznCoOtA7VuIzAjpoQGaqyNfxkB9Ue3DQ4nCbH2xC2ujA==

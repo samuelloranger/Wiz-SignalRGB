@@ -2,8 +2,6 @@ import { Bulb } from "./node_modules/wikari/lib/bulb";
 import { discover } from "./node_modules/wikari/lib/discover";
 
 export function Name() { return "WizConnected"; }
-export function VendorId() { return 0x0000; }
-export function ProductId() { return 0x0000; }
 export function Publisher() { return "samuelloranger@gmail.com"; }
 export function Size() { return [30, 10]; }
 export function DefaultPosition(){return [240, 120];}

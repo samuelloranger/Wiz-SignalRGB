@@ -6,7 +6,6 @@
   "author": "Samuel Loranger <samuelloranger@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "wikari": "^0.2.1",
-    "wiz-light": "^1.0.3"
+    "wikari": "^0.2.1"
   }
 }
