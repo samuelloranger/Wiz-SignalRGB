@@ -1,8 +1,9 @@
-import { Bulb } from "./node_modules/wikari/lib/bulb";
-import { discover } from "./node_modules/wikari/lib/discover";
+// import { Bulb } from "./node_modules/wikari/lib/bulb";
+// import { discover } from "./node_modules/wikari/lib/discover";
 
 export function Name() { return "WizConnected"; }
 export function Publisher() { return "samuelloranger@gmail.com"; }
+export function ProductId() { return 33543564 }
 export function Size() { return [30, 10]; }
 export function DefaultPosition(){return [240, 120];}
 export function DefaultScale(){return 8.0;}
@@ -23,14 +24,6 @@ export function ControllableParameters(){
 		{"property":"forcedColor", "label":"Forced Color", "min":"0", "max":"360", "type":"color", "default":"009bde"},
 	];
 }
-
-let vLedNames = [
-	"Led 1"
-];
-
-let vLedPositions = [
-	[0, 0]
-];
 
 export function LedNames() {
 	return vLedNames;
@@ -111,14 +104,14 @@ export function DiscoveryService() {
 	};
 
 	this.CheckForDevices = function() {
-		service.log("Searching for Wiz devices on the network...")
-		discover().then((bulbs) => {
-			if (!bulbs) return;
-			service.log(`Found ${bulbs.length} Wiz devices`)
-			bulbs.forEach((bulb) => {
-				this.CreateControllerDevice(bulb.address)
-			})
-		}).catch((error) => service.log(`Something wrong happened while searching for Wiz devices. Error: ${error.message}`))
+		service.log("[CheckForDevices] Searching for Wiz devices on the network...")
+		// discover().then((bulbs) => {
+		// 	if (!bulbs) return;
+		// 	service.log(`Found ${bulbs.length} Wiz devices`)
+		// 	bulbs.forEach((bulb) => {
+		// 		this.CreateControllerDevice(bulb.address)
+		// 	})
+		// }).catch((error) => service.log(`Something wrong happened while searching for Wiz devices. Error: ${error.message}`))
 	}
 
 	this.forceDiscovery = function(value) {
@@ -170,17 +163,17 @@ export function DiscoveryService() {
 
 
 class WizController {
-	bulb = null;
+	// bulb = null;
 
 	constructor(ip, discovery){
 		this.ip = ip;
 
-		this.bulb = new Bulb(
-			ip,
-			{
-				port: WIZ_BULB_LISTEN_PORT
-			}
-		)
+		// this.bulb = new Bulb(
+		// 	ip,
+		// 	{
+		// 		port: WIZ_BULB_LISTEN_PORT
+		// 	}
+		// )
 
 		this.bulb.onMessage((msg) => {
 			discovery.forceDiscovery(msg);
@@ -188,14 +181,14 @@ class WizController {
 	}
 
 	setBrightness(value) {
-		this.bulb.brightness(value);
+		this.bulb?.brightness(value);
 	}
 
 	setColor(hexCode){
-		this.bulb.color(hexCode);
+		this.bulb?.color(hexCode);
 	}
 
 	close() {
-		this.bulb.closeConnection();
+		this.bulb?.closeConnection();
 	}
 }
